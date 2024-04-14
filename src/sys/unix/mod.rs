@@ -37,7 +37,7 @@ cfg_os_poll! {
 
     cfg_io_source! {
         // Both `kqueue` and `epoll` don't need to hold any user space state.
-        #[cfg(not(any(mio_unsupported_force_poll_poll, target_os = "hermit", target_os = "solaris", target_os = "vita")))]
+        #[cfg(not(any(mio_unsupported_force_poll_poll, target_os = "hermit", target_os = "solaris", target_os = "vita", target_os = "nto")))]
         mod stateless_io_source {
             use std::io;
             #[cfg(target_os = "hermit")]
@@ -93,10 +93,10 @@ cfg_os_poll! {
             }
         }
 
-        #[cfg(not(any(mio_unsupported_force_poll_poll, target_os = "hermit", target_os = "solaris",target_os = "vita")))]
+        #[cfg(not(any(mio_unsupported_force_poll_poll, target_os = "hermit", target_os = "solaris", target_os = "vita", target_os = "nto")))]
         pub(crate) use self::stateless_io_source::IoSourceState;
 
-        #[cfg(any(mio_unsupported_force_poll_poll, target_os = "hermit", target_os = "solaris", target_os = "vita"))]
+        #[cfg(any(mio_unsupported_force_poll_poll, target_os = "hermit", target_os = "solaris", target_os = "vita", target_os = "nto"))]
         pub(crate) use self::selector::IoSourceState;
     }
 
@@ -113,6 +113,7 @@ cfg_os_poll! {
         target_os = "redox",
         target_os = "solaris",
         target_os = "vita",
+        target_os = "nto",
     ))]
     pub(crate) mod pipe;
 }

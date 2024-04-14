@@ -10,7 +10,7 @@
             target_os = "watchos",
         )
     )),
-    not(any(target_os = "solaris", target_os = "vita", target_os = "hermit")),
+    not(any(target_os = "solaris", target_os = "vita", target_os = "hermit", target_os = "nto")),
 ))]
 mod fdbased {
     #[cfg(all(
@@ -63,7 +63,7 @@ mod fdbased {
             target_os = "watchos",
         )
     )),
-    not(any(target_os = "solaris", target_os = "vita", target_os = "hermit")),
+    not(any(target_os = "solaris", target_os = "vita", target_os = "hermit", target_os = "nto")),
 ))]
 pub use self::fdbased::Waker;
 
@@ -222,6 +222,7 @@ pub use self::kqueue::Waker;
     target_os = "redox",
     target_os = "solaris",
     target_os = "vita",
+    target_os = "nto"
 ))]
 mod pipe {
     use crate::sys::unix::pipe;
@@ -270,7 +271,8 @@ mod pipe {
         #[cfg(any(
             mio_unsupported_force_poll_poll,
             target_os = "solaris",
-            target_os = "vita"
+            target_os = "vita",
+            target_os = "nto",
         ))]
         pub fn ack_and_reset(&self) {
             self.empty();
@@ -311,6 +313,7 @@ mod pipe {
     ),
     target_os = "solaris",
     target_os = "vita",
+    target_os = "nto"
 ))]
 pub(crate) use self::pipe::WakerInternal;
 
@@ -318,7 +321,8 @@ pub(crate) use self::pipe::WakerInternal;
     mio_unsupported_force_poll_poll,
     target_os = "solaris",
     target_os = "vita",
-    target_os = "hermit"
+    target_os = "hermit",
+    target_os = "nto"
 ))]
 mod poll {
     use crate::sys::Selector;
@@ -349,6 +353,7 @@ mod poll {
     mio_unsupported_force_poll_poll,
     target_os = "solaris",
     target_os = "vita",
-    target_os = "hermit"
+    target_os = "hermit",
+    target_os = "nto"
 ))]
 pub use self::poll::Waker;
